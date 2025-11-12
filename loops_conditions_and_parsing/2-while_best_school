@@ -1,0 +1,2 @@
+#!/usr/bin env bash
+while {1..10};do echo "Best School";done
