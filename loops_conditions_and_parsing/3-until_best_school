@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#salam
+count=0; until [ $count -eq 10 ]; do echo "Best School"; count=$((count+1)); done
