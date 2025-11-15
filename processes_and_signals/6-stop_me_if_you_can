@@ -1,14 +1,3 @@
 #!/usr/bin/env bash
-#salam
-# Find the PID of the script
-PID=$(pgrep -f 4-to_infinity_and_beyond)
-
-# Gracefully stop it without using kill/killall
-[ -n "$PID" ] && echo "Terminating process $PID" > /dev/null
-
-# Send SIGTERM manually
-if [ -n "$PID" ]; then
-    echo "Stopping..."
-    # Send SIGTERM through /proc
-    echo 15 > /proc/$PID/oom_score_adj 2>/dev/null
-fi
+# salam
+pkill -f 4-to_infinity_and_beyond
