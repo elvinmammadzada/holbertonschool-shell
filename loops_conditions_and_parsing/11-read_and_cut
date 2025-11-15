@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-#salm
-while IFS=: read -r username _ uid _ _ home _; do echo "$username $uid $home"; done < /etc/passwd
+#salh
+while IFS=: read -r username password user_id group_id gecos home_directory shell
+do
+    echo "$username:$user_id:$home_directory"
+done < /etc/passwd
