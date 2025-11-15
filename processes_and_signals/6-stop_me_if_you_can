@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-#a
-ps waux | grep "4-to_infinity_and_beyond" | grep -v grep | wc -l
+#salam
+# shellcheck disable=SC2009
+pgrep -f -c 4-to_infinity_and_beyond
+
