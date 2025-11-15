@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Create PID file
+echo "$$" > /var/run/myscript.pid
+
+# Handler for SIGTERM (15)
+sigterm_handler() {
+    echo "I hate the kill command"
+    rm -f /var/run/myscript.pid
+    exit 0
+}
+
+# Handler for SIGINT (Ctrl+C)
+sigint_handler() {
+    echo "Y U no love me?!"
+}
+
+# Handler for SIGQUIT (3)
+sigquit_handler() {
+    rm -f /var/run/myscript.pid
+    exit 0
+}
+
+# Trap definitions
+trap sigterm_handler SIGTERM
+trap sigint_handler SIGINT
+trap sigquit_handler SIGQUIT
+
+# Main loop
+while true
+do
+    echo "To infinity and beyond"
+    sleep 1
+done
