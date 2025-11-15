@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#salam
+for pid in /proc/[0-9]*; do
+    pname=$(basename "$pid")
+    if [ -f "$pid/comm" ]; then
+        name=$(cat "$pid/comm")
+        if [[ $name == *bash* ]]; then
+            echo "${pname##*/} $name"
+        fi
+    fi
+done
