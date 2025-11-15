@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #salam
 # shellcheck disable=SC2009
-pkill -f 4-to_infinity_and_beyond > /dev/null 2>&1
+ps waux | grep -v grep | grep -c "4-to_infinity_and_beyond"
+
 
