@@ -1,33 +1,43 @@
 #!/usr/bin/env bash
-# Create PID file
-echo "$$" > /var/run/myscript.pid
+#sss
+PID_FILE="/var/run/myscript.pid"
 
-# Handler for SIGTERM (15)
+# Try to create PID file, fail loudly if not possible
+if ! printf '%s\n' "$$" > "$PID_FILE" 2>/dev/null; then
+    echo "Error: cannot write PID file to $PID_FILE. Run as root." >&2
+    exit 1
+fi
+
+# Ensure PID file removed on exit (in case of normal exit)
+cleanup() {
+    rm -f "$PID_FILE"
+}
+trap cleanup EXIT
+
+# SIGTERM handler: print message, remove pid file and exit
 sigterm_handler() {
     echo "I hate the kill command"
-    rm -f /var/run/myscript.pid
+    rm -f "$PID_FILE"
     exit 0
 }
 
-# Handler for SIGINT (Ctrl+C)
+# SIGINT handler (Ctrl+C): print message, but keep running
 sigint_handler() {
     echo "Y U no love me?!"
 }
 
-# Handler for SIGQUIT (3)
+# SIGQUIT handler: remove pid file and exit
 sigquit_handler() {
-    rm -f /var/run/myscript.pid
+    rm -f "$PID_FILE"
     exit 0
 }
 
-# Trap definitions
-trap sigterm_handler SIGTERM
-trap sigint_handler SIGINT
-trap sigquit_handler SIGQUIT
+trap 'sigterm_handler' SIGTERM
+trap 'sigint_handler' SIGINT
+trap 'sigquit_handler' SIGQUIT
 
 # Main loop
-while true
-do
+while true; do
     echo "To infinity and beyond"
     sleep 1
 done
